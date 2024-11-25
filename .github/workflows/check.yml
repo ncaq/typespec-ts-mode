@@ -1,0 +1,12 @@
+# コミットごとにチェックを行う。
+name: check
+
+on: push
+
+jobs:
+  editorconfig:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: editorconfig-checker/action-editorconfig-checker@main
+      - run: editorconfig-checker
