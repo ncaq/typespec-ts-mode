@@ -46,7 +46,7 @@
 (require 'c-ts-common)
 
 (defcustom typespec-ts-mode-grammar
-  '("https://github.com/ncaq/tree-sitter-typespec/" "interface-have-decorators")
+  '("https://github.com/happenslol/tree-sitter-typespec/")
   "URL or a cons cell of URL and revision.
 Configuration for downloading and installing
 the tree-sitter `typespec-ts-mode' grammar."
