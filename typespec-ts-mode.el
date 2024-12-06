@@ -239,8 +239,9 @@ the tree-sitter `typespec-ts-mode' grammar."
   "Tree-sitter font-lock feature list for `typespec-ts-mode'.")
 
 ;;;###autoload
-(defun typespec-ts-install ()
+(defun typespec-ts-mode-grammar-install ()
   "Install the TypeSpec tree-sitter grammar."
+  (interactive)
   (setq-local treesit-language-source-alist
     `((typespec . ,(ensure-list typespec-ts-mode-grammar))))
   (treesit-install-language-grammar 'typespec)
@@ -269,9 +270,6 @@ the tree-sitter `typespec-ts-mode' grammar."
     (treesit-major-mode-setup)))
 
 ;;; Top-level execute code.
-
-;; TODO: Setup only when necessary.
-(typespec-ts-install)
 
 (when (treesit-ready-p 'typespec)
   (add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode)))
