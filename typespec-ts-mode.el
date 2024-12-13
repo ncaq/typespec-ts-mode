@@ -271,8 +271,8 @@ the tree-sitter `typespec-ts-mode' grammar."
 
 ;;; Top-level execute code.
 
-(when (treesit-ready-p 'typespec)
-  (add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode)))
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode))
 
 (provide 'typespec-ts-mode)
 
