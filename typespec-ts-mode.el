@@ -242,9 +242,8 @@ the tree-sitter `typespec-ts-mode' grammar."
 (defun typespec-ts-mode-grammar-install ()
   "Install the TypeSpec tree-sitter grammar."
   (interactive)
-  (setq-local treesit-language-source-alist
-    `((typespec . ,(ensure-list typespec-ts-mode-grammar))))
-  (treesit-install-language-grammar 'typespec)
+  (let ((treesit-language-source-alist `((typespec . ,(ensure-list typespec-ts-mode-grammar)))))
+    (treesit-install-language-grammar 'typespec))
   (unless (treesit-ready-p 'typespec)
     (error "Tree-sitter for TypeSpec isn't available")))
 
