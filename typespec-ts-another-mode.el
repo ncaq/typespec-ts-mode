@@ -1,12 +1,12 @@
-;;; typespec-ts-mode.el --- Major mode for TypeSpec using tree-sitter  -*- lexical-binding: t; -*-
+;;; typespec-ts-another-mode.el --- Major mode for TypeSpec using tree-sitter  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 ncaq.
 
 ;; Author: ncaq <ncaq@ncaq.net>
 ;; Maintainer: ncaq <ncaq@ncaq.net>
-;; URL: https://github.com/ncaq/typespec-ts-mode
+;; URL: https://github.com/ncaq/typespec-ts-another-mode
 
-;; Package: typespec-ts-mode
+;; Package: typespec-ts-another-mode
 ;; Keywords: typespec languages tree-sitter
 
 ;; Package-Version: 1.0.0
@@ -45,24 +45,24 @@
 
 (require 'c-ts-common)
 
-(defcustom typespec-ts-mode-grammar
+(defcustom typespec-ts-another-mode-grammar
   '("https://github.com/happenslol/tree-sitter-typespec/")
   "URL or a cons cell of URL and revision.
 Configuration for downloading and installing
-the tree-sitter `typespec-ts-mode' grammar."
+the tree-sitter `typespec-ts-another-mode' grammar."
   :type '(choice (string :tag "URL")
            (cons :tag "URL and Revision"
              (string :tag "URL")
              (string :tag "Revision")))
-  :group 'typespec-ts)
+  :group 'typespec-ts-another)
 
-(defcustom typespec-ts-mode-indent-offset 2
-  "Number of spaces for each indentation step in `typespec-ts-mode'."
+(defcustom typespec-ts-another-mode-indent-offset 2
+  "Number of spaces for each indentation step in `typespec-ts-another-mode'."
   :type 'integer
   :safe 'integerp
-  :group 'typespec-ts)
+  :group 'typespec-ts-another)
 
-(defvar typespec-ts-mode--syntax-table
+(defvar typespec-ts-another-mode--syntax-table
   (let ((table (make-syntax-table)))
     ;; Taken from the cc-langs version
     (modify-syntax-entry ?_    "_"      table)
@@ -84,9 +84,9 @@ the tree-sitter `typespec-ts-mode' grammar."
     (modify-syntax-entry ?$    "_"      table)
     (modify-syntax-entry ?`    "\""     table)
     table)
-  "Syntax table for `typespec-ts-mode'.")
+  "Syntax table for `typespec-ts-another-mode'.")
 
-(defvar typespec-ts-mode--indent-rules
+(defvar typespec-ts-another-mode--indent-rules
   `((typespec
       ((parent-is "source_file") column-0 0)
       ((node-is "}") parent-bol 0)
@@ -96,54 +96,54 @@ the tree-sitter `typespec-ts-mode' grammar."
       ((and (parent-is "comment") c-ts-common-looking-at-star)
         c-ts-common-comment-start-after-first-star -1)
       ((parent-is "comment") prev-adaptive-prefix 0)
-      ((parent-is "model_expression") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "tuple_expression") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "namespace_body") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "interface_body") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "union_body") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "enum_body") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "template_arguments") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "template_parameters") parent-bol typespec-ts-mode-indent-offset)
-      ((parent-is "operation_arguments") parent-bol typespec-ts-mode-indent-offset)))
-  "`typespec-ts-mode' Rules used for indentation.")
+      ((parent-is "model_expression") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "tuple_expression") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "namespace_body") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "interface_body") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "union_body") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "enum_body") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "template_arguments") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "template_parameters") parent-bol typespec-ts-another-mode-indent-offset)
+      ((parent-is "operation_arguments") parent-bol typespec-ts-another-mode-indent-offset)))
+  "`typespec-ts-another-mode' Rules used for indentation.")
 
-(defvar typespec-ts-mode--keyword-operator
+(defvar typespec-ts-another-mode--keyword-operator
   '("is" "extends" "valueof")
-  "`typespec-ts-mode' @keyword.operator by query.")
+  "`typespec-ts-another-mode' @keyword.operator by query.")
 
-(defvar typespec-ts-mode--keyword-type
+(defvar typespec-ts-another-mode--keyword-type
   '("namespace" "model" "scalar" "interface" "enum" "union" "alias")
-  "`typespec-ts-mode' @keyword.operator by query.")
+  "`typespec-ts-another-mode' @keyword.operator by query.")
 
-(defvar typespec-ts-mode--keyword-function
+(defvar typespec-ts-another-mode--keyword-function
   '("op" "fn" "dec")
-  "`typespec-ts-mode' @keyword.function by query.")
+  "`typespec-ts-another-mode' @keyword.function by query.")
 
-(defvar typespec-ts-mode--keyword-modifier
+(defvar typespec-ts-another-mode--keyword-modifier
   '("extern")
-  "`typespec-ts-mode' @keyword.modifier by query.")
+  "`typespec-ts-another-mode' @keyword.modifier by query.")
 
-(defvar typespec-ts-mode--keyword-import
+(defvar typespec-ts-another-mode--keyword-import
   '("import" "using")
-  "`typespec-ts-mode' @keyword.import by query.")
+  "`typespec-ts-another-mode' @keyword.import by query.")
 
-(defvar typespec-ts-mode--punctuation-bracket
+(defvar typespec-ts-another-mode--punctuation-bracket
   '("(" ")" "{" "}" "<" ">" "[" "]")
-  "`typespec-ts-mode' @punctuation.bracket by query.")
+  "`typespec-ts-another-mode' @punctuation.bracket by query.")
 
-(defvar typespec-ts-mode--punctuation-delimiter
+(defvar typespec-ts-another-mode--punctuation-delimiter
   '("," ";" "." ":")
-  "`typespec-ts-mode' @punctuation.delimiter by query.")
+  "`typespec-ts-another-mode' @punctuation.delimiter by query.")
 
-(defvar typespec-ts-mode--operator
+(defvar typespec-ts-another-mode--operator
   '("|" "&" "=" "...")
-  "`typespec-ts-mode' @operator by query.")
+  "`typespec-ts-another-mode' @operator by query.")
 
-(defvar typespec-ts-mode--punctuation-special
+(defvar typespec-ts-another-mode--punctuation-special
   '("?")
-  "`typespec-ts-mode' @punctuation.special by query.")
+  "`typespec-ts-another-mode' @punctuation.special by query.")
 
-(defvar typespec-ts-mode--font-lock-settings
+(defvar typespec-ts-another-mode--font-lock-settings
   (treesit-font-lock-rules
     :language 'typespec
     :feature 'type
@@ -161,26 +161,26 @@ the tree-sitter `typespec-ts-mode' grammar."
 
     :language 'typespec
     :feature 'operator
-    `([,@typespec-ts-mode--operator] @font-lock-operator-face)
+    `([,@typespec-ts-another-mode--operator] @font-lock-operator-face)
 
     :language 'typespec
     :feature 'keyword
-    `([ ,@typespec-ts-mode--keyword-operator
-        ,@typespec-ts-mode--keyword-type
-        ,@typespec-ts-mode--keyword-function
-        ,@typespec-ts-mode--keyword-modifier
-        ,@typespec-ts-mode--keyword-import
+    `([ ,@typespec-ts-another-mode--keyword-operator
+        ,@typespec-ts-another-mode--keyword-type
+        ,@typespec-ts-another-mode--keyword-function
+        ,@typespec-ts-another-mode--keyword-modifier
+        ,@typespec-ts-another-mode--keyword-import
         ]
        @font-lock-keyword-face)
 
     :language 'typespec
     :feature 'bracket
-    `([,@typespec-ts-mode--punctuation-bracket] @font-lock-bracket-face)
+    `([,@typespec-ts-another-mode--punctuation-bracket] @font-lock-bracket-face)
 
     :language 'typespec
     :feature 'delimiter
-    `( [,@typespec-ts-mode--punctuation-delimiter] @font-lock-delimiter-face
-       [,@typespec-ts-mode--punctuation-special  ] @font-lock-misc-punctuation-face)
+    `( [,@typespec-ts-another-mode--punctuation-delimiter] @font-lock-delimiter-face
+       [,@typespec-ts-another-mode--punctuation-special  ] @font-lock-misc-punctuation-face)
 
     :language 'typespec
     :feature 'comment
@@ -229,29 +229,29 @@ the tree-sitter `typespec-ts-mode' grammar."
     :language 'typespec
     :feature 'function
     `(operation_statement name: (identifier) @font-lock-function-name-face))
-  "Tree-sitter font-lock settings for `typespec-ts-mode'.")
+  "Tree-sitter font-lock settings for `typespec-ts-another-mode'.")
 
-(defvar typespec-ts-mode--font-lock-feature-list
+(defvar typespec-ts-another-mode--font-lock-feature-list
   '( (comment module variable-member)
      (keyword string escape-sequence)
      (constant identifier number pattern attribute type)
      (function bracket delimiter))
-  "Tree-sitter font-lock feature list for `typespec-ts-mode'.")
+  "Tree-sitter font-lock feature list for `typespec-ts-another-mode'.")
 
 ;;;###autoload
-(defun typespec-ts-mode-grammar-install ()
+(defun typespec-ts-another-mode-grammar-install ()
   "Install the TypeSpec tree-sitter grammar."
   (interactive)
-  (let ((treesit-language-source-alist `((typespec . ,(ensure-list typespec-ts-mode-grammar)))))
+  (let ((treesit-language-source-alist `((typespec . ,(ensure-list typespec-ts-another-mode-grammar)))))
     (treesit-install-language-grammar 'typespec))
   (unless (treesit-ready-p 'typespec)
     (error "Tree-sitter for TypeSpec isn't available")))
 
 ;;;###autoload
-(define-derived-mode typespec-ts-mode prog-mode "TypeSpec"
+(define-derived-mode typespec-ts-another-mode prog-mode "TypeSpec"
   "Major mode for TypeSpec using tree-sitter."
-  :syntax-table typespec-ts-mode--syntax-table
-  :group 'typespec-ts
+  :syntax-table typespec-ts-another-mode--syntax-table
+  :group 'typespec-ts-another
 
   (when (treesit-ready-p 'typespec)
     (treesit-parser-create 'typespec)
@@ -260,19 +260,19 @@ the tree-sitter `typespec-ts-mode' grammar."
     (c-ts-common-comment-setup)
 
     ;; Font-lock.
-    (setq-local treesit-font-lock-settings typespec-ts-mode--font-lock-settings)
-    (setq-local treesit-font-lock-feature-list typespec-ts-mode--font-lock-feature-list)
+    (setq-local treesit-font-lock-settings typespec-ts-another-mode--font-lock-settings)
+    (setq-local treesit-font-lock-feature-list typespec-ts-another-mode--font-lock-feature-list)
 
     ;; Indent.
-    (setq-local treesit-simple-indent-rules typespec-ts-mode--indent-rules)
+    (setq-local treesit-simple-indent-rules typespec-ts-another-mode--indent-rules)
 
     (treesit-major-mode-setup)))
 
 ;;; Top-level execute code.
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsp\\'" . typespec-ts-another-mode))
 
-(provide 'typespec-ts-mode)
+(provide 'typespec-ts-another-mode)
 
-;;; typespec-ts-mode.el ends here
+;;; typespec-ts-another-mode.el ends here

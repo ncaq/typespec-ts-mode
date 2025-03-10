@@ -1,4 +1,4 @@
-# typespec-ts-mode
+# typespec-ts-another-mode
 
 Major mode for [TypeSpec](https://typespec.io/) using [tree-sitter](https://tree-sitter.github.io/tree-sitter/).
 
@@ -12,7 +12,7 @@ This mode uses [tree-sitter-typespec](https://github.com/happenslol/tree-sitter-
 # Grammar Installation
 
 I have a PR out to [treesit-auto](https://github.com/renzmann/treesit-auto) and will use that when it is imported.
-Or run the `(typespec-ts-mode-grammar-install)` only the first time.
+Or run the `(typespec-ts-another-mode-grammar-install)` only the first time.
 
 # LSP
 
