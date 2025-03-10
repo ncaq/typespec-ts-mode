@@ -1,4 +1,4 @@
-# コミットごとにチェックを行う。
+# check on push.
 name: check
 
 on: push
