@@ -9,7 +9,7 @@
 ;; Package: typespec-ts-another-mode
 ;; Keywords: typespec languages tree-sitter
 
-;; Package-Version: 1.0.0
+;; Package-Version: 2.0.0
 ;; Package-Requires: ((emacs "29.1"))
 
 ;; This file is not part of GNU Emacs.
