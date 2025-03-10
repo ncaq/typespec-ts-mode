@@ -266,7 +266,11 @@ the tree-sitter `typespec-ts-another-mode' grammar."
     ;; Indent.
     (setq-local treesit-simple-indent-rules typespec-ts-another-mode--indent-rules)
 
-    (treesit-major-mode-setup)))
+    (treesit-major-mode-setup)
+
+    ;; To compatible with typespec-ts-mode.
+    (when (boundp 'typespec-ts-mode-hook)
+      (run-hooks 'typespec-ts-mode-hook))))
 
 ;;; Top-level execute code.
 
